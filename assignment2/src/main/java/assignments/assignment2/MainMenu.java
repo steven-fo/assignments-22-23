@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import assignments.assignment1.NotaGenerator;
+
 import static assignments.assignment1.NotaGenerator.*;
 
 public class MainMenu {
@@ -35,6 +37,7 @@ public class MainMenu {
 
     private static void handleGenerateUser() {
         // TODO: handle generate user
+        NotaGenerator.pilihanSatu();
     }
 
     private static void handleGenerateNota() {
@@ -47,6 +50,18 @@ public class MainMenu {
 
     private static void handleListUser() {
         // TODO: handle list semua user pada sistem
+        int jumlahMember;
+        if (memberList == null) {
+            jumlahMember = 0;
+            System.out.printf("Terdaftar %d member dalam sistem.\n", jumlahMember);
+        }
+        else {
+            System.out.printf("Terdaftar %d member dalam sistem.\n", memberList.length);
+            for (int i = 0; i<memberList.length; i++) {
+                System.out.printf("- %s : %s\n", memberList[i].getId(), memberList[i].getNama());
+            }
+        }
+        
     }
 
     private static void handleAmbilCucian() {

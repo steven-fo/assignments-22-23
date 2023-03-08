@@ -16,10 +16,20 @@ public class NotaGenerator {
      */
     public static void main(String[] args) {
         // TODO: Implement interface menu utama
-        while (true) {
+        boolean isRunning = true;
+        while (isRunning) {
             printMenu();
-            cekPilihan();
+            System.out.print("Pilihan : ");
+            String command = input.next();
+            System.out.println("================================");
+            switch (command){
+                case "1" -> pilihanSatu();
+                case "2" -> pilihanDua();
+                case "0" -> isRunning = false;
+                default -> System.out.println("Perintah tidak diketahui, silakan periksa kembali.");
+            }
         }
+        System.out.println("Terima kasih telah menggunakan NotaGenerator!");
     }
 
     /**
@@ -54,9 +64,8 @@ public class NotaGenerator {
         // TODO: Implement generate ID sesuai soal.
         nama = nama.toUpperCase();
         int checkSum = 0;
-        String id = nama+'-'+nomorHP;
-        for (int i = 0; i<id.length(); i++) {
-            if (isAlpha(id.charAt(i))) {
+        for (int i = 0; i<nama.length(); i++) {
+            if (isAlpha(nama.charAt(i))) {
                 checkSum += nama.charAt(i) - '@';           //dikurang @ agar nilai dec A = 1
             }
             else {
@@ -66,10 +75,11 @@ public class NotaGenerator {
         for (int i = 0; i<nomorHP.length(); i++) {
             checkSum += nomorHP.charAt(i) - '0';        //dikurang 0 agar nilai 0 = 0
         }
+        checkSum += 7;
         if (checkSum > 100) {
             checkSum = checkSum % 100;
         } 
-        else if (checkSum < 10) {
+        if (checkSum < 10) {
             return nama+'-'+nomorHP+"-0"+checkSum;
         }
         return nama+'-'+nomorHP+'-'+checkSum;           //return id pelanggan
@@ -91,45 +101,9 @@ public class NotaGenerator {
 
     public static String generateNota(String id, String paket, int berat, String tanggalTerima){
         // TODO: Implement generate nota sesuai soal.
-        String notaLaundry = "";
         int harga = hitungHarga(paket);
         String tanggalSelesai = hitungTanggal(tanggalTerima, paket);
-        notaLaundry += "ID    : "+id+"\n";
-        notaLaundry += "Paket : "+paket+"\n";
-        notaLaundry += "Harga :\n";
-        notaLaundry += berat+" kg x "+harga+" = "+berat*harga+"\n";
-        notaLaundry += "Tanggal Terima  : "+tanggalTerima+"\n";
-        notaLaundry += "Tanggal Selesai : "+tanggalSelesai+"\n";
-        return notaLaundry;
-    }
-
-    /**
-     * Method untuk cek pilihan (0, 1, 2, pilihan selain 3 tsb)
-     */
-    public static void cekPilihan() {
-        System.out.print("Pilihan : ");
-        try {
-            int pilihan = input.nextInt();
-            System.out.println("================================");
-            if (pilihan == 0) {
-                input.close();
-                System.out.println("Terima kasih telah menggunakan NotaGenerator!");
-                System.exit(0);
-            }
-            else if (pilihan == 1) {
-                pilihanSatu();
-            }
-            else if (pilihan == 2) {
-                pilihanDua();
-            }
-            else {
-                throw new Exception();
-            }
-        }
-        catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("Perintah tidak diketahui, silakan periksa kembali.");
-        }
+        return "ID    : "+id+"\n" + "Paket : "+paket+"\n" + "Harga :\n" + berat+" kg x "+harga+" = "+berat*harga+"\n" + "Tanggal Terima  : "+tanggalTerima+"\n" + "Tanggal Selesai : "+tanggalSelesai+"\n";
     }
 
     /**
@@ -185,7 +159,7 @@ public class NotaGenerator {
                 status = false;
             }
             else {
-                System.out.println("Nomor hp hanya menerima digit");
+                System.out.println("Field nomor hp hanya menerima digit");
             }
         }
         return nomorHP;
@@ -197,18 +171,27 @@ public class NotaGenerator {
         int beratCucian = 0;
         boolean status = true;
         while (status) {
-            int berat = input.nextInt();
-            if (berat < 2 && berat > 0) {
-                System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                beratCucian = 2;
-                status = false;
-            }
-            else if (berat >= 2) {
-                beratCucian = berat;
-                status = false;
+            String berat = input.next();
+            if (berat.length() > 1) {           //jika input berat berupa string
+                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
             }
             else {
-                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                char beratChar = berat.charAt(0);
+                if (Character.isDigit(beratChar)) {
+                    int beratInt = Character.getNumericValue(beratChar);
+                    if (beratInt < 2 && beratInt > 0) {
+                        System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+                        beratCucian = 2;
+                        status = false;
+                    }
+                    else if (beratInt >= 2) {
+                        beratCucian = beratInt;
+                        status = false;
+                    }
+                }
+                else {
+                    System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                }
             }
         }
         return beratCucian;
