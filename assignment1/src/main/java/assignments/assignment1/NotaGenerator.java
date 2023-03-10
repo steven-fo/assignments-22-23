@@ -62,11 +62,13 @@ public class NotaGenerator {
      */
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
-        nama = nama.toUpperCase();
+        String[] arrNama = nama.split(" ");
+        String namaDepan = arrNama[0];
+        namaDepan = namaDepan.toUpperCase();
         int checkSum = 0;
-        for (int i = 0; i<nama.length(); i++) {
-            if (isAlpha(nama.charAt(i))) {
-                checkSum += nama.charAt(i) - '@';           //dikurang @ agar nilai dec A = 1
+        for (int i = 0; i<namaDepan.length(); i++) {
+            if (isAlpha(namaDepan.charAt(i))) {
+                checkSum += namaDepan.charAt(i) - '@';           //dikurang @ agar nilai dec A = 1
             }
             else {
                 checkSum += 7;
@@ -76,13 +78,13 @@ public class NotaGenerator {
             checkSum += nomorHP.charAt(i) - '0';        //dikurang 0 agar nilai 0 = 0
         }
         checkSum += 7;
-        if (checkSum > 100) {
+        if (checkSum >= 100) {
             checkSum = checkSum % 100;
         } 
         if (checkSum < 10) {
-            return nama+'-'+nomorHP+"-0"+checkSum;
+            return namaDepan+'-'+nomorHP+"-0"+checkSum;
         }
-        return nama+'-'+nomorHP+'-'+checkSum;           //return id pelanggan
+        return namaDepan+'-'+nomorHP+'-'+checkSum;           //return id pelanggan
     }
 
     /**
@@ -223,15 +225,12 @@ public class NotaGenerator {
         String paketTemp = paket.toLowerCase();         //lower case untuk cek if else
         if (paketTemp.equals("express")) {
             tanggal = tanggal.plusDays(1);
-            System.out.println("express");
         }
         else if (paketTemp.equals("fast")) {
             tanggal = tanggal.plusDays(2);
-            System.out.println("fast");
         }
         else if (paketTemp.equals("reguler")) {
             tanggal = tanggal.plusDays(3);
-            System.out.println("reguler");
         }
         String tanggalSelesai = tanggal.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));                  //return dari localdate diubah menjadi dd/mm/yyyy sebelumnya default yyyy-mm-dd
         return tanggalSelesai;

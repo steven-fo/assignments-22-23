@@ -24,7 +24,16 @@ public class Member {
         return this.nama;
     }
 
+    public String getNoHp() {
+        return this.noHp;
+    }
+
     public String getId() {
+        generateId();
         return this.id;
+    }
+
+    public boolean equalsObj(Member anotherMember) {
+        return this.getId().equals(anotherMember.getId());
     }
 }
