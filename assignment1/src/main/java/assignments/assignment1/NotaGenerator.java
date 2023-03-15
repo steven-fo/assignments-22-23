@@ -62,29 +62,21 @@ public class NotaGenerator {
      */
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
-        String[] arrNama = nama.split(" ");
-        String namaDepan = arrNama[0];
-        namaDepan = namaDepan.toUpperCase();
-        int checkSum = 0;
-        for (int i = 0; i<namaDepan.length(); i++) {
-            if (isAlpha(namaDepan.charAt(i))) {
-                checkSum += namaDepan.charAt(i) - '@';           //dikurang @ agar nilai dec A = 1
-            }
-            else {
-                checkSum += 7;
-            }
+        String id = "";
+        id += (nama.split(" ")[0] + "-").toUpperCase();
+        id += nomorHP;
+
+        int checksum = 0;
+        for (char c : id.toCharArray()) {
+            if (Character.isDigit(c))
+                checksum += c - '0';
+            else if (Character.isLetter(c))
+                checksum += (c - 'A') + 1;
+            else
+                checksum += 7;
         }
-        for (int i = 0; i<nomorHP.length(); i++) {
-            checkSum += nomorHP.charAt(i) - '0';        //dikurang 0 agar nilai 0 = 0
-        }
-        checkSum += 7;
-        if (checkSum >= 100) {
-            checkSum = checkSum % 100;
-        } 
-        if (checkSum < 10) {
-            return namaDepan+'-'+nomorHP+"-0"+checkSum;
-        }
-        return namaDepan+'-'+nomorHP+'-'+checkSum;           //return id pelanggan
+        id += String.format("-%02d", checksum % 100);
+        return id;
     }
 
     /**
@@ -114,7 +106,6 @@ public class NotaGenerator {
     public static void pilihanSatu() {
         System.out.println("Masukkan nama Anda:");
         String nama = input.next();
-        input.nextLine();
         System.out.println("Masukkan nomor handphone Anda:");
         String nomorHP = cekNomorHP();
         String idPelanggan = generateId(nama, nomorHP);             //call method generate id
@@ -127,7 +118,6 @@ public class NotaGenerator {
     public static void pilihanDua() {
         System.out.println("Masukkan nama Anda:");
         String nama = input.next();
-        input.nextLine();
         System.out.println("Masukkan nomor handphone Anda:");
         String nomorHP = cekNomorHP();
         System.out.println("Masukkan tanggal terima: ");
@@ -142,27 +132,10 @@ public class NotaGenerator {
     }
 
     public static String cekNomorHP() {
-        boolean status = true;
-        boolean isNumeric = true;
-        String nomorHP = "";
-        while (status) {
-            String nomor = input.next();
-            for (int i = 0; i<nomor.length(); i++) {
-                if (Character.isDigit(nomor.charAt(i))) {
-                    isNumeric = true;
-                    nomorHP += nomor.charAt(i);
-                }
-                else {
-                    isNumeric = false;
-                    break;
-                }
-            }
-            if (isNumeric) {
-                status = false;
-            }
-            else {
-                System.out.println("Field nomor hp hanya menerima digit");
-            }
+        String nomorHP = input.next();
+        while (!isNumeric(nomorHP)) {
+            System.out.println("Nomor hp hanya menerima digit");
+            nomorHP = input.next();
         }
         return nomorHP;
     }
@@ -170,31 +143,16 @@ public class NotaGenerator {
      * Method untuk cek berat (harus bil positif, kurang dari 2 maka berat dianggap 2)
      */
     public static int cekBerat() {
-        int beratCucian = 0;
-        boolean status = true;
-        while (status) {
-            String berat = input.next();
-            if (berat.length() > 1) {           //jika input berat berupa string
-                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
-            }
-            else {
-                char beratChar = berat.charAt(0);
-                if (Character.isDigit(beratChar)) {
-                    int beratInt = Character.getNumericValue(beratChar);
-                    if (beratInt < 2 && beratInt > 0) {
-                        System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                        beratCucian = 2;
-                        status = false;
-                    }
-                    else if (beratInt >= 2) {
-                        beratCucian = beratInt;
-                        status = false;
-                    }
-                }
-                else {
-                    System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
-                }
-            }
+        String berat = input.next();
+        while (!isNumeric(berat) || Integer.parseInt(berat) < 1) {
+            System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+            berat = input.next();
+        }
+        int beratCucian = Integer.parseInt(berat);
+
+        if (beratCucian < 2) {
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            beratCucian = 2;
         }
         return beratCucian;
     }
@@ -214,6 +172,7 @@ public class NotaGenerator {
         else if (paketTemp.equals("reguler")) {
             harga = 7000;
         }
+
         return harga;
     }
 
@@ -264,6 +223,14 @@ public class NotaGenerator {
     public static boolean isAlpha(char s) {
         if (!(s >= 'A' && s <= 'Z') && !(s >= 'a' && s <= 'z')) {
             return false;
+        }
+        return true;
+    }
+
+    public static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c))
+                return false;
         }
         return true;
     }

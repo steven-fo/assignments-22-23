@@ -13,6 +13,7 @@ public class Member {
         // TODO: buat constructor untuk class ini
         this.nama = nama;
         this.noHp = noHp;
+        this.bonusCounter = 0;
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
@@ -31,6 +32,14 @@ public class Member {
     public String getId() {
         generateId();
         return this.id;
+    }
+
+    public void setBonusCounter(int bonus) {
+        this.bonusCounter = bonus;
+    }
+
+    public int getBonusCounter() {
+        return this.bonusCounter;
     }
 
     public boolean equalsObj(Member anotherMember) {

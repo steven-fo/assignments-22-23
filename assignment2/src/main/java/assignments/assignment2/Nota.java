@@ -15,6 +15,7 @@ public class Nota {
     //tambahan selain di soal
     private String tanggalSelesai;
     private int harga;
+    private int bonus;
 
     public Nota(Member member, String paket, int berat, String tanggalMasuk) {
         // TODO: buat constructor untuk class ini
@@ -24,6 +25,7 @@ public class Nota {
         this.tanggalMasuk = tanggalMasuk;
         this.tanggalSelesai = NotaGenerator.hitungTanggal(this.tanggalMasuk, this.paket);
         this.harga = NotaGenerator.hitungHarga(this.paket);
+        this.bonus = 1;
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
@@ -35,6 +37,14 @@ public class Nota {
     }
 
     public String toString() {
-        return "ID    : "+this.member.getId()+"\n" + "Paket : "+this.paket+"\n" + "Harga :\n" + this.berat+" kg x "+this.harga+" = "+this.berat*this.harga+"\n" + "Tanggal Terima  : "+this.tanggalMasuk+"\n" + "Tanggal Selesai : "+this.tanggalSelesai;
+        String output = "";
+        if (member.getBonusCounter() == 3) {
+            this.bonus = 2;
+            output = "ID    : "+this.member.getId()+"\n" + "Paket : "+this.paket+"\n" + "Harga :\n" + this.berat+" kg x "+this.harga+" = "+this.berat*this.harga +" = "+ this.berat*this.harga/this.bonus +"(Discount member 50%!!!)\n" + "Tanggal Terima  : "+this.tanggalMasuk+"\n" + "Tanggal Selesai : "+this.tanggalSelesai;
+        }
+        else {
+            output = "ID    : "+this.member.getId()+"\n" + "Paket : "+this.paket+"\n" + "Harga :\n" + this.berat+" kg x "+this.harga+" = "+this.berat*this.harga/this.bonus+"\n" + "Tanggal Terima  : "+this.tanggalMasuk+"\n" + "Tanggal Selesai : "+this.tanggalSelesai;
+        }
+        return output;
     }
 }

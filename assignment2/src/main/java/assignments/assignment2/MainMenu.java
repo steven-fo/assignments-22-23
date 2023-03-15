@@ -14,8 +14,8 @@ public class MainMenu {
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     private static Calendar cal = Calendar.getInstance();
     private static ArrayList<Nota> notaList = new ArrayList<Nota>();                        //ubah array menjadi array list
-    private static ArrayList<Member> memberList = new ArrayList<Member>();                 //ubah array menjadi array list
-    private static int idNota = 0;
+    private static ArrayList<Member> memberList = new ArrayList<Member>();                  //ubah array menjadi array list
+    private static int idNota = 0;                                                          //variable untuk id nota
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -46,8 +46,8 @@ public class MainMenu {
         System.out.println("Masukkan nomor handphone Anda:");
         String nomorHP = cekNomorHP();
         String idPelanggan = generateId(nama, nomorHP);
-        Member member = new Member(nama, nomorHP);
-        if (memberList.size() > 0) {
+        Member member = new Member(nama, nomorHP);                                  //Membuat obj member baru
+        if (memberList.size() > 0) {                                                //Cek apakah member sudah ada sebelumnya
             for (int i = 0; i<memberList.size(); i++) {
                 if (member.equalsObj(memberList.get(i))) {
                     isExist = true;
@@ -70,21 +70,27 @@ public class MainMenu {
         boolean notExist = false;
         System.out.println("Masukkan ID member:");
         String idMember = input.nextLine();
-        if (memberList.size() == 0) {
+        if (memberList.size() == 0) {                                                       //Cek apakah list member kosong
             notExist = true;
         }
         else {
             for (int i = 0; i<memberList.size(); i++) {
-                if (memberList.get(i).getId().equals(idMember)) {
+                if (memberList.get(i).getId().equals(idMember)) {                           //Cari obj member sesuai id
                     member = memberList.get(i);
-                    String paketLaundry = cekPaketLaundry();
+                    String paketLaundry = cekPaketLaundry();                                //Validasi paket laundry
                     System.out.println("Masukkan berat cucian Anda [Kg]:");
-                    int beratCucian = cekBerat();
+                    int beratCucian = cekBerat();                                           //Validasi berat
                     System.out.println("Berhasil menambahkan nota!");
+                    if (member.getBonusCounter() == 3) {                                    //Cek bonus, kalau sudah 3 dapet bonus
+                        member.setBonusCounter(1);
+                    }
+                    else {
+                        member.setBonusCounter(member.getBonusCounter()+1);
+                    }
                     String tanggalMasuk = fmt.format(cal.getTime());
                     System.out.printf("[ID Nota = %d]\n", idNota);
                     Nota nota = new Nota(member, paketLaundry, beratCucian, tanggalMasuk);
-                    System.out.println(nota);
+                    System.out.println(nota);                                               //Generate nota
                     String status = cekStatus(nota);
                     System.out.printf("Status      	: %s\n", status);
                     notaList.add(nota);
@@ -105,14 +111,20 @@ public class MainMenu {
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
         int jumlahNota;
-        if (memberList == null) {
+        int jumlahNull = jumlahNull();
+        if (notaList == null) { 
             jumlahNota = 0;
             System.out.printf("Terdaftar %d nota dalam sistem.\n", jumlahNota);
         }
         else {
-            System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size());
+            System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size()-jumlahNull);
             for (int i = 0; i<notaList.size(); i++) {
-                System.out.printf("- [%d] Status      	: %s\n", i, cekStatus(notaList.get(i)));
+                if (notaList.get(i) == null) {
+                    continue;
+                }
+                else {
+                    System.out.printf("- [%d] Status      	: %s\n", i, cekStatus(notaList.get(i)));
+                }
             }
         }
     }
@@ -137,12 +149,13 @@ public class MainMenu {
         String idNotaAmbil;
         System.out.println("Masukkan ID nota yang akan diambil:");
         idNotaAmbil = cekIdNota();
-        if (Integer.parseInt(idNotaAmbil) <= notaList.size()) {
+        if (Integer.parseInt(idNotaAmbil) < notaList.size()) {
             if (notaList.get(Integer.parseInt(idNotaAmbil)).getIsReady(fmt.format(cal.getTime()))) {
                 notaList.set(Integer.parseInt(idNotaAmbil), null);
                 System.out.printf("Nota dengan ID %s berhasil diambil!\n", idNotaAmbil);
             }
-            else {
+            //TODO: Error index out of bounds
+            else if (notaList.get(Integer.parseInt(idNotaAmbil)) == null || !notaList.get(Integer.parseInt(idNotaAmbil)).getIsReady(fmt.format(cal.getTime()))) {
                 System.out.printf("Nota dengan ID %s gagal diambil!\n", idNotaAmbil);
             }
         }
@@ -156,7 +169,10 @@ public class MainMenu {
         System.out.println("Dek Depe tidur hari ini... zzz...");
         cal.add(Calendar.DAY_OF_MONTH, 1);
         for (int i = 0; i<notaList.size(); i++) {
-            if (notaList.get(i).getIsReady(fmt.format(cal.getTime()))) {
+            if (notaList.get(i) == null) {
+                continue;
+            }
+            else if (notaList.get(i).getIsReady(fmt.format(cal.getTime()))) {
                 System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", i);
             }
         }
@@ -177,6 +193,11 @@ public class MainMenu {
         System.out.println("[0] Exit");
     }
 
+    /**
+     * Method untuk cek status laundry
+     * @param nota
+     * @return
+     */
     public static String cekStatus(Nota nota) {
         String status = "";
         if (!nota.getIsReady(fmt.format(cal.getTime()))) {
@@ -188,29 +209,29 @@ public class MainMenu {
         return status;
     }
 
+    /**
+     * Method untuk cek id nota harus angka
+     * @return
+     */
     public static String cekIdNota() {
-        boolean status = true;
-        boolean isNumeric = true;
-        String idNota = "";
-        while (status) {
-            String id = input.next();
-            for (int i = 0; i<id.length(); i++) {
-                if (Character.isDigit(id.charAt(i))) {
-                    isNumeric = true;
-                }
-                else {
-                    isNumeric = false;
-                    break;
-                }
-            }
-            if (!isNumeric) {
-                idNota = id;
-                status = false;
-            }
-            else {
-                System.out.println("ID nota berbentuk angka!");
-            }
+        String idNota = input.nextLine();
+        while (!isNumeric(idNota)) {
+            System.out.println("ID Nota berbentuk angka!");
+            idNota = input.nextLine();
         }
         return idNota;
+    }
+
+    /**
+     * Method untuk menghitung jumlah null di nota list
+     */
+    public static int jumlahNull() {
+        int jumlah = 0;
+        for (int i = 0; i<notaList.size(); i++) {
+            if (notaList.get(i) == null) {
+                jumlah += 1;
+            }
+        }
+        return jumlah;
     }
 }
