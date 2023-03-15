@@ -97,7 +97,7 @@ public class NotaGenerator {
         // TODO: Implement generate nota sesuai soal.
         int harga = hitungHarga(paket);
         String tanggalSelesai = hitungTanggal(tanggalTerima, paket);
-        return "ID    : "+id+"\n" + "Paket : "+paket+"\n" + "Harga :\n" + berat+" kg x "+harga+" = "+berat*harga+"\n" + "Tanggal Terima  : "+tanggalTerima+"\n" + "Tanggal Selesai : "+tanggalSelesai+"\n";
+        return "ID    : "+id+"\n" + "Paket : "+paket+"\n" + "Harga :\n" + berat+" kg x "+harga+" = "+berat*harga+"\n" + "Tanggal Terima  : "+tanggalTerima+"\n" + "Tanggal Selesai : "+tanggalSelesai;
     }
 
     /**

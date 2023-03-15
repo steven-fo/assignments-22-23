@@ -154,7 +154,6 @@ public class MainMenu {
                 notaList.set(Integer.parseInt(idNotaAmbil), null);
                 System.out.printf("Nota dengan ID %s berhasil diambil!\n", idNotaAmbil);
             }
-            //TODO: Error index out of bounds
             else if (notaList.get(Integer.parseInt(idNotaAmbil)) == null || !notaList.get(Integer.parseInt(idNotaAmbil)).getIsReady(fmt.format(cal.getTime()))) {
                 System.out.printf("Nota dengan ID %s gagal diambil!\n", idNotaAmbil);
             }
