@@ -134,7 +134,7 @@ public class NotaGenerator {
     public static String cekNomorHP() {
         String nomorHP = input.next();
         while (!isNumeric(nomorHP)) {
-            System.out.println("Nomor hp hanya menerima digit");
+            System.out.println("Field nomor hp hanya menerima digit");
             nomorHP = input.next();
         }
         return nomorHP;
