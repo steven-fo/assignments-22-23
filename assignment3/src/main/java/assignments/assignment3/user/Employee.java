@@ -1,9 +1,10 @@
 package assignments.assignment3.user;
 
 public class Employee extends Member {
-    public static int employeeCount;
+    public static int employeeCount = 0;
     public Employee(String nama, String password) {
         super(nama, generateId(nama), password);
+        employeeCount++;
     }
 
     /**
@@ -15,6 +16,8 @@ public class Employee extends Member {
      */
     private static String generateId(String nama) {
         // TODO
-        return "";
+        String[] arrNama = nama.split(" ");
+        String namaDepan = arrNama[0];
+        return namaDepan.toUpperCase()+"-"+employeeCount;
     }
 }

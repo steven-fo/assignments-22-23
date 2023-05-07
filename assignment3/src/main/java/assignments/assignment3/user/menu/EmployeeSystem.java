@@ -30,6 +30,12 @@ public class EmployeeSystem extends SystemCLI {
     protected boolean processChoice(int choice) {
         boolean logout = false;
         // TODO:
+        switch (choice) {
+            case 1 -> kerjakan();
+            case 2 -> displayNota();
+            case 3 -> logout = true;
+            default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
+        }
         return logout;
     }
 
@@ -41,5 +47,18 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("1. It's nyuci time");
         System.out.println("2. Display List Nota");
         System.out.println("3. Logout");
+    }
+
+    protected void kerjakan() {
+        System.out.printf("Stand back! %s beginning to nyuci!\n", loginMember.getNama());
+        for (int i=0; i<notaList.length; i++) {
+            System.out.printf("Nota %d : %s\n", i, notaList[i].kerjakan());
+        }
+    }
+
+    protected void displayNota() {
+        for (int i=0; i<notaList.length; i++) {
+            System.out.printf("Nota %d : %s\n", i, notaList[i].getNotaStatus());
+        }
     }
 }

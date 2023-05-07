@@ -13,6 +13,7 @@ public class NotaManager {
      */
     public static void toNextDay(){
         //TODO: implement skip hari
+        cal.add(Calendar.DAY_OF_MONTH, 1);
     }
 
     /**
@@ -22,5 +23,11 @@ public class NotaManager {
      */
     public static void addNota(Nota nota){
         //TODO: implement add nota
+        Nota[] tempList = new Nota[notaList.length+1];
+        for (int i=0; i<notaList.length; i++) {
+            tempList[i] = notaList[i];
+        }
+        tempList[notaList.length] = nota;
+        notaList = tempList;
     }
 }

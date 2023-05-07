@@ -31,6 +31,12 @@ public class Member {
      */
     public void addNota(Nota nota) {
         // TODO
+        Nota[] tempList = new Nota[notaList.length+1];
+        for (int i=0; i<notaList.length; i++) {
+            tempList[i] = notaList[i];
+        }
+        tempList[notaList.length] = nota;
+        notaList = tempList;
     }
 
     /**
@@ -41,7 +47,7 @@ public class Member {
      */
     protected boolean authenticate(String password) {
         // TODO
-        return false;
+        return password.equals(this.password);
     }
 
     // Dibawah ini adalah getter

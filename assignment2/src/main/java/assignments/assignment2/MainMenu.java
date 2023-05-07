@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 
-import assignments.assignment1.NotaGenerator;
-
 import static assignments.assignment1.NotaGenerator.*;
 
 public class MainMenu {
