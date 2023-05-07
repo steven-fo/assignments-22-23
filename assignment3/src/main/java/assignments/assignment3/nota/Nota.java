@@ -13,7 +13,7 @@ public class Nota {
     private String tanggalMasuk;
     private boolean isDone;
     static public int totalNota;
-    private int pointer = 0;                   
+    private int pointer = 0;                   //pointer disini untuk mengecek service apa yang akan dikerjakan
     private String hargaAkhirString = "";
 
     public Nota(Member member, int berat, String paket, String tanggal) {
@@ -37,14 +37,15 @@ public class Nota {
 
     public String kerjakan(){
         // TODO
-        if (pointer != services.length) {
+        if (pointer != services.length) {               //kalau pointer belum melebihi akhir
             if (services.length > 1) {
                 LaundryService service = services[pointer];
                 pointer++;
                 return service.doWork();
             }
-            else {
+            else {                                      //kalau service hanya ada 1
                 LaundryService service = services[pointer];
+                pointer++;
                 return service.doWork();
             }
         }
@@ -55,9 +56,9 @@ public class Nota {
 
     public void toNextDay() {
         // TODO
-        System.out.println("masuk");
-        System.out.println(this.sisaHariPengerjaan);
-        this.sisaHariPengerjaan -= 1;
+        if (this.getNotaStatus().equals("Belum selesai")) {
+            this.sisaHariPengerjaan -= 1;
+        }
     }
 
     public long calculateHarga(){
@@ -68,7 +69,7 @@ public class Nota {
 
     public String getNotaStatus(){
         // TODO
-        if (pointer != services.length-1) {
+        if (pointer <= services.length-1) {
             return "Belum selesai";
         }
         else {
@@ -83,11 +84,11 @@ public class Nota {
         long hargaAkhir = calculateHarga();
         String output = NotaGenerator.generateNota(member.getId(), paket, berat, tanggalMasuk);
         String serviceList = "\n--- SERVICE LIST ---\n";
-        for (int i=0; i<services.length; i++) {
+        for (int i=0; i<services.length; i++) {             //print service
             outputService = outputService+"-"+services[i].getServiceName()+" @ Rp."+services[i].getHarga(berat)+"\n";
             hargaAkhir += services[i].getHarga(berat);
         }
-        if (this.sisaHariPengerjaan < 0) {
+        if (this.sisaHariPengerjaan < 0) {                  //cek ada kompensasi engga
             hargaAkhir = hargaAkhir + this.sisaHariPengerjaan*2000;
             if (hargaAkhir <= 0) {
                 hargaAkhir = 0;
@@ -100,7 +101,7 @@ public class Nota {
         return output+serviceList+outputService+hargaAkhirString;
     }
 
-    public int hitungSisaHari() {
+    public int hitungSisaHari() {                          
         if (this.paket.equals("express")) {
             return 1;
         }

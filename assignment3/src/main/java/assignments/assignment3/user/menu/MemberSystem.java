@@ -61,7 +61,7 @@ public class MemberSystem extends SystemCLI {
         int berat = cekBerat();
         boolean setrika = pilihSetrika();
         boolean antar = pilihAntar();
-        Nota nota = new Nota(loginMember, berat, paket, NotaManager.fmt.format(NotaManager.cal.getTime()));             //tanggal masuk
+        Nota nota = new Nota(loginMember, berat, paket, NotaManager.fmt.format(NotaManager.cal.getTime()));
         CuciService cuci = new CuciService();
         nota.addService(cuci);
         if (setrika) {
