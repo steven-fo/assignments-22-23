@@ -73,11 +73,13 @@ public class MemberSystem extends SystemCLI {
             nota.addService(antarService);
         }
         loginMember.addNota(nota);
+        NotaManager.addNota(nota);
         System.out.println("Nota berhasil dibuat!");
     }
 
     public void lihatNota() {
         for (int i=0; i<loginMember.getNotaList().length; i++) {
+            System.out.println("[ID Nota = "+i+"]");
             System.out.println(loginMember.getNotaList()[i]);
         }
     }

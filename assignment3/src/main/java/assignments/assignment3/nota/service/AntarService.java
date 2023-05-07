@@ -7,7 +7,7 @@ public class AntarService implements LaundryService{
     @Override
     public String doWork() {
         // TODO
-        isDone();
+        kerja = true;
         return "Sedang mengantar...";
     }
 

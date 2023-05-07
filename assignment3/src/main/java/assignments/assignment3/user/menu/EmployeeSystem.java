@@ -52,13 +52,13 @@ public class EmployeeSystem extends SystemCLI {
     protected void kerjakan() {
         System.out.printf("Stand back! %s beginning to nyuci!\n", loginMember.getNama());
         for (int i=0; i<notaList.length; i++) {
-            System.out.printf("Nota %d : %s\n", i, notaList[i].kerjakan());
+            System.out.printf("Nota %d : %s \n", i, notaList[i].kerjakan());
         }
     }
 
     protected void displayNota() {
         for (int i=0; i<notaList.length; i++) {
-            System.out.printf("Nota %d : %s\n", i, notaList[i].getNotaStatus());
+            System.out.printf("Nota %d : %s \n", i, notaList[i].getNotaStatus());
         }
     }
 }

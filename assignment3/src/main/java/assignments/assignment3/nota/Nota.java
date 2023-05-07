@@ -13,7 +13,7 @@ public class Nota {
     private String tanggalMasuk;
     private boolean isDone;
     static public int totalNota;
-    private int pointer = 0;
+    private int pointer = 0;                   
     private String hargaAkhirString = "";
 
     public Nota(Member member, int berat, String paket, String tanggal) {
@@ -22,6 +22,7 @@ public class Nota {
         this.berat = berat;
         this.paket = paket;
         this.tanggalMasuk = tanggal;
+        this.sisaHariPengerjaan = hitungSisaHari();
     }
 
     public void addService(LaundryService service){
@@ -36,14 +37,26 @@ public class Nota {
 
     public String kerjakan(){
         // TODO
-        LaundryService service = services[pointer];
-        pointer++;
-        return service.doWork();
+        if (pointer != services.length) {
+            if (services.length > 1) {
+                LaundryService service = services[pointer];
+                pointer++;
+                return service.doWork();
+            }
+            else {
+                LaundryService service = services[pointer];
+                return service.doWork();
+            }
+        }
+        else {
+            return "Sudah selesai.";
+        }
     }
 
     public void toNextDay() {
         // TODO
-        hitungSisaHari();
+        System.out.println("masuk");
+        System.out.println(this.sisaHariPengerjaan);
         this.sisaHariPengerjaan -= 1;
     }
 
@@ -55,7 +68,7 @@ public class Nota {
 
     public String getNotaStatus(){
         // TODO
-        if (services.length>0) {
+        if (pointer != services.length-1) {
             return "Belum selesai";
         }
         else {
@@ -69,8 +82,6 @@ public class Nota {
         String outputService = "";
         long hargaAkhir = calculateHarga();
         String output = NotaGenerator.generateNota(member.getId(), paket, berat, tanggalMasuk);
-        String idNota = "[ID Nota = "+id+"]\n";
-        id++;
         String serviceList = "\n--- SERVICE LIST ---\n";
         for (int i=0; i<services.length; i++) {
             outputService = outputService+"-"+services[i].getServiceName()+" @ Rp."+services[i].getHarga(berat)+"\n";
@@ -78,24 +89,28 @@ public class Nota {
         }
         if (this.sisaHariPengerjaan < 0) {
             hargaAkhir = hargaAkhir + this.sisaHariPengerjaan*2000;
-            hargaAkhirString = "Harga Akhir: "+hargaAkhir+"Ada kompensasi keterlambatan "+this.sisaHariPengerjaan*-1+"2000 hari\n";
+            if (hargaAkhir <= 0) {
+                hargaAkhir = 0;
+            }
+            hargaAkhirString = "Harga Akhir: "+hargaAkhir+" Ada kompensasi keterlambatan "+this.sisaHariPengerjaan*-1+" * 2000 hari\n";
         }
         else {
             hargaAkhirString = "Harga Akhir: "+hargaAkhir+"\n";
         }
-        return idNota+output+serviceList+outputService+hargaAkhirString;
+        return output+serviceList+outputService+hargaAkhirString;
     }
 
-    public void hitungSisaHari() {
+    public int hitungSisaHari() {
         if (this.paket.equals("express")) {
-            this.sisaHariPengerjaan = 1;
+            return 1;
         }
         else if (this.paket.equals("fast")) {
-            this.sisaHariPengerjaan = 2;
+            return 2;
         }
         else if (this.paket.equals("reguler")) {
-            this.sisaHariPengerjaan = 3;
+            return 3;
         }
+        return 0;
     }
 
     // Dibawah ini adalah getter
