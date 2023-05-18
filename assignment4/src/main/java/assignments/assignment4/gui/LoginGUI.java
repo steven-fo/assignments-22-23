@@ -94,6 +94,8 @@ public class LoginGUI extends JPanel {
      * */
     private void handleBack() {
         MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+        idTextField.setText("");
+        passwordField.setText("");
     }
 
     /**
@@ -102,5 +104,14 @@ public class LoginGUI extends JPanel {
      * */
     private void handleLogin() {
         // TODO
+        String inputId = idTextField.getText();
+        String inputPassword = new String(passwordField.getPassword());
+        boolean statusLogin = MainFrame.getInstance().login(inputId, inputPassword);
+        if (!statusLogin) {
+            JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+            idTextField.setText("");
+            passwordField.setText("");
+        }
     }
 }

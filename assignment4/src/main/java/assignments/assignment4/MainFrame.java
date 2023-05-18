@@ -98,11 +98,16 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
-        for (Loginable panel:
-                loginablePanel) {
+        boolean status = false;
+        for (Loginable panel: loginablePanel) {
             // TODO
+            status = panel.login(id, password);
+            if (status) {
+                navigateTo(panel.getPageName());
+                break;
+            }
         }
-        return false;
+        return status;
     }
 
 
@@ -110,8 +115,7 @@ public class MainFrame extends JFrame{
      * Method untuk logout dari sistem, kemudian menampilkan halaman Home.
      * */
     public void logout(){
-        for (Loginable panel:
-                loginablePanel) {
+        for (Loginable panel: loginablePanel) {
             panel.logout();
         }
         navigateTo(HomeGUI.KEY);

@@ -89,7 +89,12 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * */
     public boolean login(String id, String password) {
         // TODO
-        return false;
+        Member authUser = systemCLI.authUser(id, password);
+        if (authUser != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
