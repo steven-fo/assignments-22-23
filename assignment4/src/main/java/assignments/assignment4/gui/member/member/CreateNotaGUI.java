@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 public class CreateNotaGUI extends JPanel {
     public static final String KEY = "CREATE_NOTA";
+    private String[] items = {"Express", "Fast", "Reguler"};
     private JLabel paketLabel;
     private JComboBox<String> paketComboBox;
     private JButton showPaketButton;
@@ -45,6 +46,38 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        paketLabel = new JLabel("Paket Laundry:");
+        paketComboBox = new JComboBox<String>(items);
+        showPaketButton = new JButton("Show Paket", null);
+        beratLabel = new JLabel("Berat Cucian (Kg):");
+        beratTextField = new JTextField(8);
+        setrikaCheckBox = new JCheckBox("Tambah Setrika Service (1000 / kg)", null, false);
+        antarCheckBox = new JCheckBox("Tambah Antar Service (2000 / 4kg pertama, kemudian 500 / kg)", null, false);
+        createNotaButton = new JButton("Buat Nota", null);
+        backButton = new JButton("Kembali", null);
+
+        showPaketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPaket();
+            }
+        });
+
+        createNotaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createNota();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleBack();
+            }
+        });
+
+        
     }
 
     /**

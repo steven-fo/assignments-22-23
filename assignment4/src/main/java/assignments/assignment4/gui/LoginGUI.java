@@ -39,6 +39,53 @@ public class LoginGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        GridBagConstraints gbc = new GridBagConstraints();
+        idLabel = new JLabel("Masukkan ID Anda:");
+        idTextField = new JTextField();
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        passwordField = new JPasswordField();
+        loginButton = new JButton("Login", null);
+        backButton = new JButton("Kembali", null);
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleLogin();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleBack();
+            }
+        });
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        mainPanel.add(idLabel, gbc);
+        
+        gbc.gridy = 1;
+        mainPanel.add(idTextField, gbc);
+
+        gbc.gridy = 2;
+        mainPanel.add(passwordLabel, gbc);
+
+        gbc.gridy = 3;
+        mainPanel.add(passwordField, gbc);
+
+        gbc.fill = GridBagConstraints.CENTER;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridy = 4;
+        gbc.weightx = 0;
+        mainPanel.add(loginButton, gbc);
+
+        gbc.gridy = 5;
+        mainPanel.add(backButton, gbc);
     }
 
     /**
@@ -46,6 +93,7 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
     /**

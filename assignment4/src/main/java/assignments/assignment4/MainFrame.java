@@ -32,12 +32,12 @@ public class MainFrame extends JFrame{
 
     private MainFrame(){
         super("CuciCuciSystem");
-//        TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
-//        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-//        employeeSystem.addEmployee(new Employee[]{
-//                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-//                new Employee("Regret", "FansBeratKanaArima")
-//        });
+       // TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
+       // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+       employeeSystem.addEmployee(new Employee[]{
+               new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
+               new Employee("Regret", "FansBeratKanaArima")
+       });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -84,6 +84,7 @@ public class MainFrame extends JFrame{
      * */
     public void navigateTo(String page){
         // TODO
+        cards.show(mainPanel, page);
     }
 
     /**

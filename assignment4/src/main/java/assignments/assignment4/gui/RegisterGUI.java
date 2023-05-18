@@ -42,6 +42,64 @@ public class RegisterGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        GridBagConstraints gbc = new GridBagConstraints();
+        nameLabel = new JLabel("Masukkan nama Anda:");
+        nameTextField = new JTextField();
+        phoneLabel = new JLabel("Masukkan nomor handphone Anda:");
+        phoneTextField = new JTextField();
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        passwordField = new JPasswordField();
+        registerButton = new JButton("Register", null);
+        backButton = new JButton("Kembali", null);
+
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleRegister();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleBack();
+            }
+        });
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        mainPanel.add(nameLabel, gbc);
+
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(nameTextField, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = 2;
+        mainPanel.add(phoneLabel, gbc);
+
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(phoneTextField, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = 4;
+        mainPanel.add(passwordLabel, gbc);
+
+        gbc.gridy = 5;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(passwordField, gbc);
+
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.CENTER;
+        mainPanel.add(registerButton, gbc);
+
+        gbc.gridy = 7;
+        mainPanel.add(backButton, gbc);
     }
 
     /**
@@ -49,6 +107,7 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
     /**
