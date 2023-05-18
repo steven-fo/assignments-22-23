@@ -1,5 +1,6 @@
 package assignments.assignment4.gui;
 
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
@@ -116,5 +117,26 @@ public class RegisterGUI extends JPanel {
     * */
     private void handleRegister() {
         // TODO
+        String inputNama = nameTextField.getText();
+        String inputNoHp = phoneTextField.getText();
+        String inputPassword = new String(passwordField.getPassword());
+        if (inputNama.equals("") || inputNoHp.equals("") || inputPassword.equals("")) {
+            JOptionPane.showMessageDialog(mainPanel, "Semua field diatas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
+        } else if (!NotaGenerator.isNumeric(inputNoHp)) {
+            JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Member member = loginManager.register(inputNama, inputNoHp, inputPassword);
+            if (member == null) {
+                JOptionPane.showMessageDialog(mainPanel, "User dengan nama "+inputNama+" dan nomor hp "+inputNoHp+" sudah ada!", "Registration Failed", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID "+member.getId()+"!", "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
+            }
+            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+            nameTextField.setText("");
+            phoneTextField.setText("");
+            passwordField.setText("");
+        }
     }
+
+
 }
