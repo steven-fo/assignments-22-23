@@ -39,6 +39,7 @@ public class LoginGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        // Create components
         GridBagConstraints gbc = new GridBagConstraints();
         idLabel = new JLabel("Masukkan ID Anda:");
         idTextField = new JTextField();
@@ -47,6 +48,7 @@ public class LoginGUI extends JPanel {
         loginButton = new JButton("Login", null);
         backButton = new JButton("Kembali", null);
 
+        // Add listener to buttons
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +63,7 @@ public class LoginGUI extends JPanel {
             }
         });
 
+        // Set layout for components
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
@@ -108,10 +111,10 @@ public class LoginGUI extends JPanel {
         String inputPassword = new String(passwordField.getPassword());
         boolean statusLogin = MainFrame.getInstance().login(inputId, inputPassword);
         if (!statusLogin) {
-            JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
             MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-            idTextField.setText("");
-            passwordField.setText("");
         }
+        idTextField.setText("");
+        passwordField.setText("");
     }
 }

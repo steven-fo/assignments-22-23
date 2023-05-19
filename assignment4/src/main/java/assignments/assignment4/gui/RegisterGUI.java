@@ -43,6 +43,7 @@ public class RegisterGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        // Create components
         GridBagConstraints gbc = new GridBagConstraints();
         nameLabel = new JLabel("Masukkan nama Anda:");
         nameTextField = new JTextField();
@@ -53,6 +54,7 @@ public class RegisterGUI extends JPanel {
         registerButton = new JButton("Register", null);
         backButton = new JButton("Kembali", null);
 
+        // Add listener to buttons
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,6 +69,7 @@ public class RegisterGUI extends JPanel {
             }
         });
 
+        // Set layout for components
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;

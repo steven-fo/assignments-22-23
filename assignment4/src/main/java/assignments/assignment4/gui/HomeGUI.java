@@ -40,6 +40,7 @@ public class HomeGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
+        // Create components
         GridBagConstraints gbc = new GridBagConstraints();
         titleLabel = new JLabel("Selamat datang di CuciCuci System!");
         dateLabel = new JLabel("Hari ini: "+ fmt.format(cal.getTime()));
@@ -47,6 +48,7 @@ public class HomeGUI extends JPanel {
         registerButton = new JButton("Register", null);
         toNextDayButton = new JButton("Next Day", null);
 
+        // Add listener to buttons
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,13 +70,16 @@ public class HomeGUI extends JPanel {
             }
         });
 
+        // Set layout for components
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weighty = 1;
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         mainPanel.add(titleLabel, gbc);
 
         gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.CENTER;
         mainPanel.add(loginButton, gbc);
 
         gbc.gridy = 2;

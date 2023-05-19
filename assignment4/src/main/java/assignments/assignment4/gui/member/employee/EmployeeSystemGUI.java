@@ -4,6 +4,7 @@ import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 
 import assignments.assignment3.user.menu.SystemCLI;
+import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
@@ -32,6 +33,8 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
+            new JButton("It\'s nyuci time", null),
+            new JButton("Display List Nota", null),
         };
     }
 
@@ -55,6 +58,16 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         // TODO
+        if (NotaManager.notaList.length == 0) {
+            JOptionPane.showMessageDialog(this, "Belum ada nota", "List nota", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String output = "";
+            for (int i = 0; i<NotaManager.notaList.length; i++) {
+                output += "Nota "+i+" : ";
+                output += NotaManager.notaList[i].getNotaStatus()+"\n";
+            }
+            JOptionPane.showMessageDialog(this, output, "List Nota", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -63,5 +76,16 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        if (NotaManager.notaList.length == 0) {
+            JOptionPane.showMessageDialog(this, "nothing to cuci here", "Nyuci Results", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String output = "";
+            for (int i = 0; i<NotaManager.notaList.length; i++) {
+                output += "Nota "+i+": ";
+                output += NotaManager.notaList[i].kerjakan()+"\n";
+            }
+            JOptionPane.showMessageDialog(this, "Stand back! "+loggedInMember.getNama()+" is beginning to nyuci", "Nyuci Time", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, output, "Nyuci Results", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

@@ -43,9 +43,9 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         JButton[] buttons = createButtons();
         ActionListener[] listeners = createActionListeners();
 
-        // if (buttons.length != listeners.length) {
-        //     throw new IllegalStateException("Number of buttons and listeners must be equal.");
-        // }
+        if (buttons.length != listeners.length) {
+            throw new IllegalStateException("Number of buttons and listeners must be equal.");
+        }
 
         JPanel buttonsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -91,6 +91,9 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         // TODO
         Member authUser = systemCLI.authUser(id, password);
         if (authUser != null) {
+            loggedInMember = authUser;
+            welcomeLabel.setText("Welcome! "+authUser.getNama());
+            loggedInAsLabel.setText("Logged in as "+authUser.getId());
             return true;
         } else {
             return false;
