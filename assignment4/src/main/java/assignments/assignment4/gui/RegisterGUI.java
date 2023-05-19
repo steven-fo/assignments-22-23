@@ -1,6 +1,5 @@
 package assignments.assignment4.gui;
 
-import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
@@ -125,7 +124,7 @@ public class RegisterGUI extends JPanel {
         String inputPassword = new String(passwordField.getPassword());
         if (inputNama.equals("") || inputNoHp.equals("") || inputPassword.equals("")) {
             JOptionPane.showMessageDialog(mainPanel, "Semua field diatas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
-        } else if (!NotaGenerator.isNumeric(inputNoHp)) {
+        } else if (!isNumeric(inputNoHp)) {
             JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
         } else {
             Member member = loginManager.register(inputNama, inputNoHp, inputPassword);
@@ -141,5 +140,17 @@ public class RegisterGUI extends JPanel {
         }
     }
 
+     /**
+     * Method untuk mengecek suatu String apakah angka smua atau tidak
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c))
+                return false;
+        }
+        return true;
+    }
 
 }

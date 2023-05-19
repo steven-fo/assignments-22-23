@@ -182,6 +182,11 @@ public class CreateNotaGUI extends JPanel {
         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
     }
 
+    /**
+     * Method untuk mengecek suatu String apakah angka smua atau tidak
+     * @param str
+     * @return
+     */
     public static boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c))
