@@ -1,6 +1,5 @@
 package assignments.assignment4.gui.member.member;
 
-import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.AntarService;
@@ -148,7 +147,7 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void createNota() {
         // TODO
-        if (!NotaGenerator.isNumeric(beratTextField.getText()) || Integer.parseInt(beratTextField.getText()) <= 0) {
+        if (!isNumeric(beratTextField.getText()) || Integer.parseInt(beratTextField.getText()) <= 0) {
             JOptionPane.showMessageDialog(mainPanel, "Berat Cucian harus berupa angka!", "Error", JOptionPane.ERROR_MESSAGE);
             beratTextField.setText("");
         } else {
@@ -181,5 +180,13 @@ public class CreateNotaGUI extends JPanel {
     private void handleBack() {
         // TODO
         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+    }
+
+    public static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c))
+                return false;
+        }
+        return true;
     }
 }
